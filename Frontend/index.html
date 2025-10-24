@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Phishing Detector</title>
+  <link rel="stylesheet" href="/Frontend/index.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Phishing Detector</h1>
+    <!-- Prevent default submission -->
+    <form id="emailForm" onsubmit="return false;">
+      <label>Sender (e.g., "Bank Support <no-reply@bank.com>")</label>
+      <input id="sender" placeholder='Name <email@domain.com>' />
+      <label>Subject</label>
+      <input id="subject" />
+      <label>Body</label>
+      <textarea id="body" rows="8"></textarea>
+      <button id="analyzeBtn" type="button">Analyze</button>
+    </form>
+
+    <div id="result" class="card" style="display:none;">
+      <h2>Result</h2>
+      <p><strong>Label:</strong> <span id="label"></span></p>
+      <p><strong>Probability (phishing):</strong> <span id="prob"></span></p>
+      <div>
+        <strong>Indicators:</strong>
+        <ul id="indicators"></ul>
+      </div>
+      <div>
+        <strong>Top contributing words:</strong>
+        <ul id="top_features"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
