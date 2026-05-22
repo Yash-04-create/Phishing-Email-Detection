@@ -1,38 +1,109 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Phishing Detector</title>
-  <link rel="stylesheet" href="/Frontend/index.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phishing Email Detector</title>
+  <link rel="stylesheet" href="./index.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Phishing Detector</h1>
-    <!-- Prevent default submission -->
-    <form id="emailForm" onsubmit="return false;">
-      <label>Sender (e.g., "Bank Support <no-reply@bank.com>")</label>
-      <input id="sender" placeholder='Name <email@domain.com>' />
-      <label>Subject</label>
-      <input id="subject" />
-      <label>Body</label>
-      <textarea id="body" rows="8"></textarea>
-      <button id="analyzeBtn" type="button">Analyze</button>
-    </form>
+  <main class="page-shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Email Security Lab</p>
+        <h1>Phishing Email Detector</h1>
+        <p class="lede">
+          Paste an email sender, subject, and body to see whether it looks legitimate or suspicious,
+          with model confidence, warning indicators, and top contributing words.
+        </p>
+      </div>
 
-    <div id="result" class="card" style="display:none;">
-      <h2>Result</h2>
-      <p><strong>Label:</strong> <span id="label"></span></p>
-      <p><strong>Probability (phishing):</strong> <span id="prob"></span></p>
-      <div>
-        <strong>Indicators:</strong>
-        <ul id="indicators"></ul>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-label">Model</span>
+          <strong>Logistic Regression</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Dataset</span>
+          <strong>Data/Data_set.csv</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Mode</span>
+          <strong>Real-time scoring</strong>
+        </div>
       </div>
-      <div>
-        <strong>Top contributing words:</strong>
-        <ul id="top_features"></ul>
-      </div>
-    </div>
-  </div>
+    </section>
+
+    <section class="workspace">
+      <form id="emailForm" class="panel composer" autocomplete="off">
+        <div class="panel-heading">
+          <div>
+            <p class="panel-kicker">Try an email</p>
+            <h2>Enter the message details</h2>
+          </div>
+          <button id="fillSampleBtn" class="ghost-btn" type="button">Load sample</button>
+        </div>
+
+        <label for="sender">Sender</label>
+        <input id="sender" name="sender" placeholder='Bank Support <no-reply@bank.com>' />
+
+        <label for="subject">Subject</label>
+        <input id="subject" name="subject" placeholder="Urgent account verification required" />
+
+        <label for="body">Email Body</label>
+        <textarea id="body" name="body" rows="11" placeholder="Paste the email body here..."></textarea>
+
+        <div class="actions">
+          <button id="analyzeBtn" type="button">Analyze Email</button>
+          <p class="hint">Tip: try both obviously phishing and normal business emails to compare results.</p>
+        </div>
+      </form>
+
+      <section id="result" class="panel result-panel" aria-live="polite" style="display:none;">
+        <div class="panel-heading">
+          <div>
+            <p class="panel-kicker">Analysis result</p>
+            <h2>Detector verdict</h2>
+          </div>
+          <span id="statusPill" class="status-pill">Pending</span>
+        </div>
+
+        <div class="score-block">
+          <div>
+            <span class="score-label">Probability of phishing</span>
+            <div class="score-row">
+              <strong id="prob">0%</strong>
+              <span id="confidenceTag" class="confidence-tag">Low confidence</span>
+            </div>
+          </div>
+          <div class="meter" aria-hidden="true">
+            <div id="meterFill" class="meter-fill"></div>
+          </div>
+        </div>
+
+        <div class="result-grid">
+          <article class="mini-card">
+            <h3>Verdict</h3>
+            <p id="label">-</p>
+          </article>
+          <article class="mini-card">
+            <h3>Sender risk</h3>
+            <p id="senderRisk">-</p>
+          </article>
+        </div>
+
+        <div class="list-card">
+          <h3>Indicators</h3>
+          <ul id="indicators" class="bullet-list"></ul>
+        </div>
+
+        <div class="list-card">
+          <h3>Top contributing words</h3>
+          <ul id="top_features" class="bullet-list"></ul>
+        </div>
+      </section>
+    </section>
+  </main>
 
   <script src="./app.js"></script>
 </body>

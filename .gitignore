@@ -1,0 +1,4 @@
+venv/
+Backend/__pycache__/
+*.pyc
+Backend/logs.db
